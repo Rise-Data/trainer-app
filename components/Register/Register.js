@@ -2,35 +2,33 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import Google from '../../assets/google_icon.png'
 import Facebook from '../../assets/facebook_icon.png'
-import OrangeButton from '../buttons/OrangeButton/OrangeButton'
 import SocialButton from '../buttons/SocialButton/SocialButton'
 import SectionSeparator from '../SectionSeparator/SectionSeparator'
 import FormInput from '../inputs/FormInput/FormInput'
+import OrangeButton from '../buttons/OrangeButton/OrangeButton'
 
-export default function Login({ navigation }) {
+export default function Register({ navigation }) {
   return (
     <View style={styles.container}>
-        <View>
-            <Text style={styles.titleH1}>Login</Text>
+      <View>
+            <Text style={styles.titleH1}>Cadastro</Text>
             <View>
                 <SocialButton title="Logar com a conta do Google" icon={Google} onPress={() => {}}/>
                 <SocialButton title="Logar com a conta do Facebook" icon={Facebook} onPress={() => {}}/>
             </View>
         </View>
-
-        <SectionSeparator title="Fazer login"/>
-
+        <SectionSeparator title="Cadastre-se"/>
         <View>
+            <FormInput placeholder="Nome" type='name'/>
             <FormInput placeholder="E-mail" type='emailAddress'/>
             <FormInput placeholder="Senha" type='password'/>
         </View>
         <View>
-            <OrangeButton title="Entrar" onPress={() => {}}/>
-            <Text style={styles.orangeText} onPress={() => {}}>Esqueceu sua senha?</Text>
+            <OrangeButton title="Cadastrar" onPress={() => {}}/>
         </View>
-        <View style={styles.footerContainer}>
-            <Text style={styles.whiteText} onPress={() => {}}>Não tem uma conta?</Text>
-            <Text style={styles.orangeText} onPress={() => navigation.navigate("Register")}> Cadastre-se aqui</Text>
+        <View>
+            <Text style={styles.whiteText} onPress={() => {}}>Já possui conta?</Text>
+            <Text style={styles.orangeText} onPress={() => navigation.navigate("Login")}> Logue aqui</Text>
         </View>
     </View>
   )
