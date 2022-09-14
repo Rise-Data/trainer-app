@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import Google from '../../assets/google_icon.png'
 import Facebook from '../../assets/facebook_icon.png'
-import OrangeButton from '../buttons/OrangeButton/OrangeButton'
+import Button from '../buttons/Button/Button'
 import SocialButton from '../buttons/SocialButton/SocialButton'
 import SectionSeparator from '../SectionSeparator/SectionSeparator'
 import FormInput from '../inputs/FormInput/FormInput'
@@ -25,7 +25,7 @@ export default function Login({ navigation }) {
             <FormInput placeholder="Senha" type='password'/>
         </View>
         <View>
-            <OrangeButton title="Entrar" onPress={() => {}}/>
+            <Button title="Entrar" color="#FF6200" onPress={() => {}}/>
             <Text style={styles.orangeText} onPress={() => {}}>Esqueceu sua senha?</Text>
         </View>
         <View style={styles.footerContainer}>
