@@ -5,7 +5,7 @@ import Facebook from '../../assets/facebook_icon.png'
 import SocialButton from '../buttons/SocialButton/SocialButton'
 import SectionSeparator from '../SectionSeparator/SectionSeparator'
 import FormInput from '../inputs/FormInput/FormInput'
-import OrangeButton from '../buttons/OrangeButton/OrangeButton'
+import Button from '../buttons/Button/Button'
 
 export default function Register({ navigation }) {
   return (
@@ -24,7 +24,7 @@ export default function Register({ navigation }) {
             <FormInput placeholder="Senha" type='password'/>
         </View>
         <View>
-            <OrangeButton title="Cadastrar" onPress={() => {}}/>
+            <Button title="Cadastrar" color="#FF6200" onPress={() => {}}/>
         </View>
         <View>
             <Text style={styles.whiteText} onPress={() => {}}>Já possui conta?</Text>
