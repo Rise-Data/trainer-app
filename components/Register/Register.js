@@ -1,37 +1,58 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, DevSettings } from 'react-native'
+import React, {useState} from 'react'
 import Google from '../../assets/google_icon.png'
 import Facebook from '../../assets/facebook_icon.png'
 import SocialButton from '../buttons/SocialButton/SocialButton'
 import SectionSeparator from '../SectionSeparator/SectionSeparator'
 import FormInput from '../inputs/FormInput/FormInput'
 import Button from '../buttons/Button/Button'
+import uuid from 'react-native-uuid'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Register({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <View>
-            <Text style={styles.titleH1}>Cadastro</Text>
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleRegister = async () => {
+        const user = {
+            id: uuid.v4().toString(),
+            name: name,
+            email: email,
+            password: password
+        }
+
+        console.log("User: ", user)
+        console.log("User JSON: ", JSON.stringify(user))
+
+        await AsyncStorage.setItem(user.id, JSON.stringify(user))
+        DevSettings.reload()
+    }
+
+    return (
+        <View style={styles.container}>
+        <View>
+                <Text style={styles.titleH1}>Cadastro</Text>
+                <View>
+                    <SocialButton title="Logar com a conta do Google" icon={Google}/>
+                    <SocialButton title="Logar com a conta do Facebook" icon={Facebook}/>
+                </View>
+            </View>
+            <SectionSeparator title="Cadastre-se"/>
             <View>
-                <SocialButton title="Logar com a conta do Google" icon={Google} onPress={() => {}}/>
-                <SocialButton title="Logar com a conta do Facebook" icon={Facebook} onPress={() => {}}/>
+                <FormInput placeholder="Nome" type='name' value={name} onChange={(value) => setName(value)} editable={true} />
+                <FormInput placeholder="E-mail" type='emailAddress' value={email} onChange={(value) => setEmail(value)} editable={true}/>
+                <FormInput placeholder="Senha" type='password' value={password} onChange={(value) => setPassword(value)} editable={true}/>
+            </View>
+            <View>
+                <Button title="Cadastrar" color="#FF6200" onPress={() => handleRegister()}/>
+            </View>
+            <View>
+                <Text style={styles.whiteText} onPress={() => {}}>Já possui conta?</Text>
+                <Text style={styles.orangeText} onPress={() => navigation.navigate("Login")}> Logue aqui</Text>
             </View>
         </View>
-        <SectionSeparator title="Cadastre-se"/>
-        <View>
-            <FormInput placeholder="Nome" type='name'/>
-            <FormInput placeholder="E-mail" type='emailAddress'/>
-            <FormInput placeholder="Senha" type='password'/>
-        </View>
-        <View>
-            <Button title="Cadastrar" color="#FF6200" onPress={() => {}}/>
-        </View>
-        <View>
-            <Text style={styles.whiteText} onPress={() => {}}>Já possui conta?</Text>
-            <Text style={styles.orangeText} onPress={() => navigation.navigate("Login")}> Logue aqui</Text>
-        </View>
-    </View>
-  )
+    )
 }
 
 const styles = StyleSheet.create({

@@ -1,32 +1,37 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import LinkButton from '../buttons/LinkButton/LinkButton'
 
+export default function Profile({ navigation, route }) {
+    const [user, setUser] = useState({})
 
-
-export default function Profile({ navigation }) {
+    useEffect(() => {
+        console.log(route.params.user)
+        setUser(route.params.user)
+    }, [])
+    
     return (
       <View style={styles.container}>
-          <View style={styles.headerProfile}>
+        <View style={styles.headerProfile}>
               <Text style={styles.titleH1}>Perfil</Text>
-              <LinkButton title='Configurações' onPress={() => navigation.navigate("Config")}/>
-          </View>  
-          <View>
-            <Text style={styles.whiteText}>Bem-vindo de volta, Professor!</Text>
-          </View>
-          <View style={{display : 'inline'}}>
+              <LinkButton title='Configurações' onPress={() => navigation.navigate("SettingsAccount", { user: user })}/>
+        </View>  
+        <View>
+            <Text style={styles.whiteText}>Bem-vindo de volta, {user.name}!</Text>
+         </View>
+        <View>
               <Text style={styles.newFeatures}>Nosso aplicativo ainda está em desenvolvimento. Aguarde por novas Features em Breve!</Text>
-          </View>  
+        </View>
       </View>
     )
-  }
+}
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         backgroundColor: '#0A0A16',
         flex: 1,
         padding: 30,
-        marginTop: 50
+        paddingTop: 50
     },
     titleH1: { 
         fontSize: 40,
@@ -39,7 +44,6 @@ export default function Profile({ navigation }) {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
-        alignSelf: 'left',
         paddingTop: 70
 
     },

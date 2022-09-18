@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function SocialButton(props) {
   return (
-        <TouchableOpacity style={styles.button} onPress={() => props.onPress}>
+        <TouchableOpacity style={styles.button} onPress={() => alert("Feature em desenvolvimento")}>
             <Image 
                 source={props.icon}
                 style={styles.icon}
