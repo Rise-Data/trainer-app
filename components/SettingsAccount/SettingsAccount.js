@@ -1,29 +1,46 @@
-import { View, Text,StyleSheet,Modal, TextInput, TouchableOpacity } from 'react-native'
-import React, {useState} from 'react'
+import { View, Text,StyleSheet, DevSettings } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import Button from '../buttons/Button/Button'
 import FormInput from '../inputs/FormInput/FormInput'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function Settings({ navigation }) {
-
+export default function Settings({ navigation, route }) {
+    const [name, setname] = useState("");
+    const [password, setpassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [enabled, setEnabled] = useState(false)
+    
+    useEffect(() => {
+        setname(route.params.user.name)
+        setpassword(route.params.user.password)
+        setEmail(route.params.user.email)
+    }, [])
+    
+    
     const confirmButton = () => {
         if (enabled) {
             return (
-                <Button title="Confirmar" color="#FF6200" onPress={() => {}}/>
+                <Button title="Confirmar" color="#FF6200" onPress={() => handleUpdate()}/>
             )
         } 
     }
 
-    const pessoa = {
-        nome: "Ricardo",
-        idade: 19,
-        email: "ricardo@email.com"
+    const handleUpdate = async () => {
+        const user = {
+            id: route.params.user.id,
+            name: name,
+            email: email,
+            password: password
+        }
+        
+        await AsyncStorage.mergeItem(user.id, JSON.stringify(user))
+        DevSettings.reload()
     }
 
-    const [nome, setNome] = useState(pessoa.nome);
-    const [idade, setIdade] = useState(pessoa.idade);
-    const [email, setEmail] = useState(pessoa.email);
-    const [enabled, setEnabled] = useState(false)
-
+    const handleDelete = async () => {
+        await AsyncStorage.removeItem(route.params.user.id)
+        DevSettings.reload()
+    }
 
     return (
         <View style={styles.container}>
@@ -31,9 +48,9 @@ export default function Settings({ navigation }) {
                 <Text style={styles.titleH1}>Settings</Text>
                 <View>
                     <Text style={styles.whiteText}>Nome:</Text>
-                    <FormInput placeholder="" value={nome}  editable={enabled} onChange={(value) => setNome(value)}/>
-                    <Text style={styles.whiteText}>Idade:</Text>
-                    <FormInput placeholder="" value={idade} editable={enabled} onChange={(value) => setIdade(value)}/>
+                    <FormInput placeholder="" value={name}  editable={enabled} onChange={(value) => setname(value)}/>
+                    <Text style={styles.whiteText}>Senha:</Text>
+                    <FormInput placeholder="" value={password} editable={enabled} onChange={(value) => setpassword(value)}/>
                     <Text style={styles.whiteText}>Email:</Text>
                     <FormInput placeholder="" value={email}  editable={enabled} onChange={(value) => setEmail(value)}/>
                     {confirmButton()}
@@ -41,7 +58,7 @@ export default function Settings({ navigation }) {
                 </View>
             </View>
             <View style={styles.footerContainer}>
-                <Button title="Remover Conta" color="#F82B10" onPress={() => {}}/>
+                <Button title="Remover Conta" color="#F82B10" onPress={() => handleDelete()}/>
             </View>
         </View>
     )

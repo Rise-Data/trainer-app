@@ -8,10 +8,9 @@ export default function FormInput(props) {
         placeholder={props.placeholder}
         placeholderTextColor={'#7C7CA4'} 
         textContentType={props.type} 
-        onChange={props.onChange}
+        onChangeText={props.onChange}
         value={props.value}
         editable={props.editable}
-        selectTextOnFocus={props.editable}
     />
   )
 }
