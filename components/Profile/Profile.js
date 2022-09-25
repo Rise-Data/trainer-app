@@ -1,9 +1,30 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import LinkButton from '../buttons/LinkButton/LinkButton'
+import Members from '../../assets/members.png'
+import Exercise from '../../assets/exercises.png'
+import Classes from '../../assets/class.png'
+import SimpleCard from '../cards/SimpleCard/SimpleCard'
+import axios from 'axios'
+import services from '../../services'
 
 export default function Profile({ navigation, route }) {
     
+    const [membersCount, setMembersCount] = useState(0)
+    const [trainingsCount, settrainingsCount] = useState(0)
+    const [classesCount, setClassesCount] = useState(0)
+
+    useEffect(() => {
+        axios.get(`${services.trainer.baseTrainer}/${route.params.user.id}`)
+        .then(response => {
+            setMembersCount(response.data.result.membersIds.length)
+            settrainingsCount(response.data.result.trainingsIds.length)
+            setClassesCount(response.data.result.classesIds.length)
+        }).catch(error => {
+            alert("Erro ao buscar dados")
+        })
+    }, [])
+
     return (
       <View style={styles.container}>
         <View style={styles.headerProfile}>
@@ -11,10 +32,15 @@ export default function Profile({ navigation, route }) {
               <LinkButton title='Configurações' onPress={() => navigation.navigate("SettingsAccount", { user: route.params.user })}/>
         </View>  
         <View>
-            <Text style={styles.whiteText}>Bem-vindo de volta, {route.params.user.user}!</Text>
+            <Text style={styles.whiteText}>Bem vindo de volta, {route.params.user.user}!</Text>
          </View>
+        <View style={styles.cardsContainer}>
+            <SimpleCard icon={Members} title='Alunos' count={membersCount} onPress={() => {}}/>
+            <SimpleCard icon={Exercise} title='Treinos' count={trainingsCount} onPress={() => {}}/>
+            <SimpleCard icon={Classes} title='Aulas' count={classesCount} onPress={() => {}}/>
+        </View>
         <View>
-              <Text style={styles.newFeatures}>Nosso aplicativo ainda está em desenvolvimento. Aguarde por novas Features em Breve!</Text>
+            <LinkButton title='Sair' onPress={() => navigation.navigate("Login")}/>
         </View>
       </View>
     )
@@ -67,6 +93,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
+    },
+    cardsContainer: {
+        paddingTop: 50,
+        paddingBottom: 50
     }
-
 })
