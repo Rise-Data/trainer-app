@@ -4,6 +4,7 @@ import Button from '../buttons/Button/Button'
 import FormInput from '../inputs/FormInput/FormInput'
 import axios from 'axios'
 import services from '../../services'
+import LinkButton from '../buttons/LinkButton/LinkButton'
 
 export default function Settings({ navigation, route }) {
     const [name, setname] = useState("")
@@ -74,6 +75,7 @@ export default function Settings({ navigation, route }) {
                 </View>
             </View>
             <View style={styles.footerContainer}>
+                <LinkButton title="Voltar" onPress={() => navigation.goBack()}/>
                 <Button title="Remover Conta" color="#F82B10" onPress={() => handleDelete()}/>
             </View>
         </View>
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     footerContainer: {
         flexDirection: 'row',
         marginTop: 20,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         paddingTop: 200
     },
   
