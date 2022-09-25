@@ -3,21 +3,15 @@ import React, {useState, useEffect} from 'react'
 import LinkButton from '../buttons/LinkButton/LinkButton'
 
 export default function Profile({ navigation, route }) {
-    const [user, setUser] = useState({})
-
-    useEffect(() => {
-        console.log(route.params.user)
-        setUser(route.params.user)
-    }, [])
     
     return (
       <View style={styles.container}>
         <View style={styles.headerProfile}>
               <Text style={styles.titleH1}>Perfil</Text>
-              <LinkButton title='Configurações' onPress={() => navigation.navigate("SettingsAccount", { user: user })}/>
+              <LinkButton title='Configurações' onPress={() => navigation.navigate("SettingsAccount", { user: route.params.user })}/>
         </View>  
         <View>
-            <Text style={styles.whiteText}>Bem-vindo de volta, {user.name}!</Text>
+            <Text style={styles.whiteText}>Bem-vindo de volta, {route.params.user.user}!</Text>
          </View>
         <View>
               <Text style={styles.newFeatures}>Nosso aplicativo ainda está em desenvolvimento. Aguarde por novas Features em Breve!</Text>

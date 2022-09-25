@@ -11,6 +11,7 @@ export default function FormInput(props) {
         onChangeText={props.onChange}
         value={props.value}
         editable={props.editable}
+        secureTextEntry={props.type == "password"}
     />
   )
 }
