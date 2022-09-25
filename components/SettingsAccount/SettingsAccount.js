@@ -1,19 +1,25 @@
-import { View, Text,StyleSheet, DevSettings } from 'react-native'
+import { View, Text,StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Button from '../buttons/Button/Button'
 import FormInput from '../inputs/FormInput/FormInput'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import services from '../../services'
 
 export default function Settings({ navigation, route }) {
-    const [name, setname] = useState("");
-    const [password, setpassword] = useState("");
-    const [email, setEmail] = useState("");
+    const [name, setname] = useState("")
+    const [password, setpassword] = useState("")
+    const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
+    const [cpf, setCpf] = useState("")
+    const [id, setId] = useState("")
     const [enabled, setEnabled] = useState(false)
     
     useEffect(() => {
-        setname(route.params.user.name)
-        setpassword(route.params.user.password)
+        setname(route.params.user.user)
         setEmail(route.params.user.email)
+        setPhone(route.params.user.phone)
+        setCpf(route.params.user.cpf)
+        setId(route.params.user.id)
     }, [])
     
     
@@ -26,20 +32,30 @@ export default function Settings({ navigation, route }) {
     }
 
     const handleUpdate = async () => {
-        const user = {
-            id: route.params.user.id,
-            name: name,
+        axios.put(`${services.trainer.baseTrainer}/${id}`, {
+            user: name,
+            password: password,
             email: email,
-            password: password
-        }
-        
-        await AsyncStorage.mergeItem(user.id, JSON.stringify(user))
-        DevSettings.reload()
+            cpf: cpf,
+            phone: phone
+        })
+        .then(response => {
+            console.log(response.data)
+            alert("Cadastro atualizado com sucesso")
+            navigation.navigate('Profile', { user: response.data.result })
+        }).catch(error => {
+            alert("Erro ao atualizar")
+        })
     }
 
     const handleDelete = async () => {
-        await AsyncStorage.removeItem(route.params.user.id)
-        DevSettings.reload()
+        axios.delete(`${services.trainer.baseTrainer}/${id}`)
+        .then(response => {
+            alert("Cadastro deletado com sucesso")
+            navigation.navigate('Login')
+        }).catch(error => {
+            alert("Erro ao remover usuário")
+        })
     }
 
     return (

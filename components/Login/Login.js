@@ -1,57 +1,36 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import Google from '../../assets/google_icon.png'
-import Facebook from '../../assets/facebook_icon.png'
 import Button from '../buttons/Button/Button'
-import SocialButton from '../buttons/SocialButton/SocialButton'
-import SectionSeparator from '../SectionSeparator/SectionSeparator'
 import FormInput from '../inputs/FormInput/FormInput'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import services from '../../services'
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [usersData, setUsersData] = useState([])
     
-    const getData = async () => {
-        try {
-            const keys = await AsyncStorage.getAllKeys()
-            const users = await AsyncStorage.multiGet(keys)
-            const tempList = users.map((user) => JSON.parse(user[1]))
-            setUsersData(tempList)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     useEffect(() => {
-        getData().then(() => {
-            console.log("Users: ", usersData)
-        })
+        setEmail('')
+        setPassword('')
     }, [])
 
-
     const handleLogin = () => {
-        const user = usersData.find((user) => user.email === email && user.password === password)
-        if (user) {
-            navigation.navigate("Profile", { user: user })
-        } else {
-            alert("Usuário não encontrado")
-        }
+        axios.post(services.trainer.loginTrainer, {
+            email: email,
+            password: password
+        })    
+        .then((response) => {
+            navigation.navigate('Profile', { user: response.data.result })
+        }).catch((error) => {
+            alert('Email ou senha incorretos')
+        })
     }
 
     return (
         <View style={styles.container}>
             <View>
                 <Text style={styles.titleH1}>Login</Text>
-                <View>
-                    <SocialButton title="Logar com a conta do Google" icon={Google}/>
-                    <SocialButton title="Logar com a conta do Facebook" icon={Facebook}/>
-                </View>
             </View>
-
-            <SectionSeparator title="Fazer login"/>
-
             <View>
                 <FormInput placeholder="E-mail" type='emailAddress' value={email} onChange={(value) => setEmail(value)} editable={true}/>
                 <FormInput placeholder="Senha" type='password' value={password} onChange={(value) => setPassword(value)} editable={true}/>
