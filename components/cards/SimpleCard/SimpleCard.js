@@ -4,7 +4,7 @@ import React from 'react'
 export default function SimpleCard(props) {
   return (
     <>
-        <TouchableOpacity style={styles.card} onPress={() => props.onPress}>
+        <TouchableOpacity style={styles.card} onPress={props.onPress}>
             <Image source={props.icon} style={styles.icon}/>
             <Text style={styles.cardText}>{props.title}</Text>
             <Text style={styles.cardText}>{props.count}</Text>

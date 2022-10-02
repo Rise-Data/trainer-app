@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import LinkButton from '../buttons/LinkButton/LinkButton'
 import Members from '../../assets/members.png'
 import Exercise from '../../assets/exercises.png'
+import Settings from '../../assets/settings.png'
 import Classes from '../../assets/class.png'
 import SimpleCard from '../cards/SimpleCard/SimpleCard'
 import axios from 'axios'
@@ -29,13 +30,15 @@ export default function Profile({ navigation, route }) {
       <View style={styles.container}>
         <View style={styles.headerProfile}>
               <Text style={styles.titleH1}>Perfil</Text>
-              <LinkButton title='Configurações' onPress={() => navigation.navigate("SettingsAccount", { user: route.params.user })}/>
+              <TouchableOpacity onPress={() => navigation.navigate("SettingsAccount", { user: route.params.user })}>
+                <Image source={Settings} style={styles.settings}/>
+              </TouchableOpacity>
         </View>  
         <View>
             <Text style={styles.whiteText}>Bem vindo de volta, {route.params.user.user}!</Text>
          </View>
         <View style={styles.cardsContainer}>
-            <SimpleCard icon={Members} title='Alunos' count={membersCount} onPress={() => {}}/>
+            <SimpleCard icon={Members} title='Alunos' count={membersCount} onPress={() => navigation.navigate("Members", {user: route.params.user})}/>
             <SimpleCard icon={Exercise} title='Treinos' count={trainingsCount} onPress={() => {}}/>
             <SimpleCard icon={Classes} title='Aulas' count={classesCount} onPress={() => {}}/>
         </View>
@@ -97,5 +100,10 @@ const styles = StyleSheet.create({
     cardsContainer: {
         paddingTop: 50,
         paddingBottom: 50
+    },
+    settings: {
+        width: 50,
+        height: 50,
+        resizeMode: 'contain'
     }
 })

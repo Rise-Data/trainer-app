@@ -6,5 +6,9 @@ export default services = {
     trainer: {
         baseTrainer: `${baseUrl}/trainer`,
         loginTrainer: `${baseUrl}/trainer/login`,
+    },
+    member: {
+        baseMember: `${baseUrl}/member`,
+        getByTrainer: `${baseUrl}/member/trainer`
     }
 }
