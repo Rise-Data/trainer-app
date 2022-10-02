@@ -14,7 +14,7 @@ export default function SimpleCardList(props) {
 
     return (
         <>
-            <TouchableOpacity style={styles.card} onPress={() => props.onPress}>
+            <TouchableOpacity style={styles.card} onPress={props.onPress}>
                 <Image source={props.icon} style={styles.icon}/>
                 <Text style={styles.cardText}>{props.title}</Text>
                 {renderActive()}

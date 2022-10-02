@@ -27,7 +27,7 @@ export default function Members({ navigation, route }) {
             return members.map(member => {
                 console.log(member.name)
                 return (
-                    <SimpleCardList icon={Member} title={member.name} active={member.active} onPress={() => {}} />
+                    <SimpleCardList icon={Member} title={member.name} active={member.active} onPress={() => navigation.push("MemberInfo", {member: member})} />
                 )
             })
         else
@@ -36,19 +36,19 @@ export default function Members({ navigation, route }) {
 
     return (
         <View style={styles.container}>
+            <View>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image source={goBack} style={styles.goBack}/>
+                </TouchableOpacity>
+            </View>
             <View style={styles.header}>
                 <Text style={styles.titleH1}>Alunos</Text>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => navigation.navigate("RegisterMember", {trainerId: route.params.user.id})}>
                     <Image source={addUser} style={styles.addButton}/>
                 </TouchableOpacity>
             </View>
             <View style={styles.listContainer}>
                 {renderMembers()}
-            </View>
-            <View>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image source={goBack} style={styles.goBack}/>
-                </TouchableOpacity>
             </View>
         </View>
     )
