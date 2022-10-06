@@ -1,6 +1,4 @@
-const baseUrl = "http://192.168.15.16:8080/api" // http://ipv4:8080/api
-
-// IPV4 -> IP address of the server.
+const baseUrl = "https://app-trainer-api-221006010913.azurewebsites.net/api"
 
 export default services = {
     trainer: {
@@ -9,6 +7,20 @@ export default services = {
     },
     member: {
         baseMember: `${baseUrl}/member`,
-        getByTrainer: `${baseUrl}/member/trainer`
+        getByTrainer: `${baseUrl}/member/trainer`,
+        getByIds: `${baseUrl}/member/ids`,
+    },
+    training: {
+        baseTraining: `${baseUrl}/training`,
+        getByTrainer: `${baseUrl}/training/trainer`,
+        getByMember: `${baseUrl}/training/member`,
+    },
+    exercise: {
+        baseExercise: `${baseUrl}/exercise`,
+        getByTraining: `${baseUrl}/exercise/training`,
+        getByIds: `${baseUrl}/exercise/ids`,
+    },
+    exerciseType: {
+        baseExerciseType: `${baseUrl}/exerciseType`,
     }
 }

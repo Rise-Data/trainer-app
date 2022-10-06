@@ -1,23 +1,10 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import Member from '../../assets/member.png'
-import SectionSeparator from '../SectionSeparator/SectionSeparator'
 import GoBack from '../../assets/goBack.png'
-import axios from 'axios'
+import InDevelopmentCard from '../cards/InDevelopmentCard/InDevelopmentCard'
 
 export default function MemberInfo({ route, navigation }) {
-
-    const [trainings, setTrainings] = useState({})
-
-    useEffect(() => {
-        // Fazer requisição para fazer a busca de treinos do aluno
-    }, [])
-
-    const phoneMask = (phone) => {
-        // Criar máscara para o telefone 11-11111-1111
-        return phone.replace(/(\d{2})-(\d{5})-(\d{4})/, "$1-$2-$3")
-    }
-
     return (
         <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -27,12 +14,13 @@ export default function MemberInfo({ route, navigation }) {
             <Image source={Member} style={styles.memberImage}/>
             <View>
                 <Text style={styles.memberName}>Nome: {route.params.member.name}</Text>
-                <Text style={styles.memberName}>Telefone: {phoneMask(route.params.member.phone)}</Text>
+                <Text style={styles.memberName}>Telefone: {route.params.member.phone}</Text>
                 <Text style={styles.memberName}>Sequência de treinos: {route.params.member.trainingSequence}</Text>
             </View>
         </View>
-        <SectionSeparator title='Treinos' />
-        <SectionSeparator title='Aulas' />
+        <View style={{marginTop: 20}}>
+            <InDevelopmentCard />
+        </View>
         </View>
     )
 }

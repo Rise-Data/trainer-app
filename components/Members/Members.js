@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import services from '../../services'
@@ -10,10 +10,12 @@ import addUser from '../../assets/addUser.png'
 export default function Members({ navigation, route }) {
     const [loading, setLoading] = useState(true)
     const [members, setMembers] = useState([])
+    const [size, setSize] = useState(4)
+    const [page, setPage] = useState(0)
 
     useEffect(() => {
         setLoading(true)
-        axios.get(`${services.member.getByTrainer}/${route.params.user.id}`)
+        axios.get(`${services.member.getByTrainer}/${route.params.user.id}?size=${size}&page=${page}`)
         .then(response => {
             setMembers(response.data.result.content)
             setLoading(false)
@@ -47,9 +49,9 @@ export default function Members({ navigation, route }) {
                     <Image source={addUser} style={styles.addButton}/>
                 </TouchableOpacity>
             </View>
-            <View style={styles.listContainer}>
+            <ScrollView style={styles.listContainer}>
                 {renderMembers()}
-            </View>
+            </ScrollView>
         </View>
     )
 }
