@@ -6,10 +6,12 @@ import inactiveIndicator from '../../../assets/inactiveIndicator.png'
 export default function SimpleCardList(props) {
 
     const renderActive = () => {
-        if (props.active)
-            return <image source={activeIndicator} style={styles.indicator} />
-        else
-            return <Image source={inactiveIndicator} style={styles.indicator} />
+        if (props.active != undefined) {
+            if (props.active)
+                return <image source={activeIndicator} style={styles.indicator} />
+            else
+                return <Image source={inactiveIndicator} style={styles.indicator} />
+        }
     }
 
     return (

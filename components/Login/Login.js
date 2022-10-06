@@ -22,7 +22,8 @@ export default function Login({ navigation }) {
         .then((response) => {
             navigation.navigate('Profile', { user: response.data.result })
         }).catch((error) => {
-            alert('Email ou senha incorretos')
+            alert("Erro ao fazer login")
+            console.log(error)
         })
     }
 

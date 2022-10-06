@@ -39,8 +39,8 @@ export default function Profile({ navigation, route }) {
          </View>
         <View style={styles.cardsContainer}>
             <SimpleCard icon={Members} title='Alunos' count={membersCount} onPress={() => navigation.navigate("Members", {user: route.params.user})}/>
-            <SimpleCard icon={Exercise} title='Treinos' count={trainingsCount} onPress={() => {}}/>
-            <SimpleCard icon={Classes} title='Aulas' count={classesCount} onPress={() => {}}/>
+            <SimpleCard icon={Exercise} title='Treinos' count={trainingsCount} onPress={() => navigation.navigate("Trainings", {user: route.params.user})}/>
+            <SimpleCard icon={Classes} title='Aulas' count={classesCount} onPress={() => alert("Feature em desenvolvimento..")}/>
         </View>
         <View>
             <LinkButton title='Sair' onPress={() => navigation.navigate("Login")}/>
